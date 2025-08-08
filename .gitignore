@@ -1,0 +1,48 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings
+.vscode/
+
+# Byte-compiled
+*.so
+
+# Vector database files (Chroma, FAISS, etc.)
+vector_db/
+!vector_db/.gitkeep   # keep folder if needed, remove if not
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Pipenv
+Pipfile.lock
+
+# pyenv
+.python-version
