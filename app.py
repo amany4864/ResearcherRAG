@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_chroma import Chroma
@@ -12,11 +12,16 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
 # Load env vars
-load_dotenv()
+# load_dotenv()
 
 # Get API key
 def get_api_key():
-    return st.session_state.get("openai_api_key") or os.getenv("OPENAI_API_KEY")
+    key = st.session_state.get("openai_api_key")
+    if not key:
+        st.error("Please enter your OpenAI API key in the sidebar to continue.")
+        st.stop()
+    return key
+
 
 # Initialize embedding model
 def get_embedding_model():
