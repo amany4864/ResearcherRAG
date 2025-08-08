@@ -8,4 +8,3 @@ sentence-transformers
 PyPDF2
 python-dotenv
 pypdf
-hf_xet
