@@ -1,7 +1,7 @@
 # 📚 ResearcherRAG - Intelligent Document Assistant
 
 A robust, domain-independent Retrieval-Augmented Generation (RAG) application built with OpenAI, Pinecone, and Streamlit. Upload your documents and ask intelligent questions powered by AI.
-
+DEPLOYED LINK:- https://amanrag.streamlit.app/
 ## ✨ Features
 
 - **🎯 Domain Agnostic** - Works with any type of PDF documents across industries
