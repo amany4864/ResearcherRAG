@@ -1,10 +1,17 @@
-streamlit
-langchain-openai
-langchain-chroma
-langchain-community
-langchain-core
-chromadb
-sentence-transformers
-PyPDF2
-python-dotenv
-pypdf
+# Core Streamlit app
+streamlit>=1.28.0
+
+# LangChain ecosystem
+langchain-openai>=0.1.0
+langchain-pinecone>=0.1.0
+langchain-community>=0.2.0
+langchain-core>=0.2.0
+
+# Vector database
+pinecone-client>=3.0.0
+
+# PDF processing
+pypdf>=4.0.0
+
+# Optional: Environment management (if needed)
+python-dotenv>=1.0.0
