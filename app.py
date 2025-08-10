@@ -11,6 +11,11 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from pinecone import Pinecone, ServerlessSpec
+import uuid
+
+# Generate unique session ID for each app run
+if "session_id" not in st.session_state:
+    st.session_state.session_id = str(uuid.uuid4())
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -279,7 +284,13 @@ INDEX_NAME = "rag-index-new"  # or any other name
                     chunks = splitter.split_documents(data)
                     
                     if chunks:
+                        # Add session ID to every chunk before storing
+                        for chunk in chunks:
+                            chunk.metadata = chunk.metadata or {}
+                            chunk.metadata["session_id"] = st.session_state.session_id
                         db.add_documents(chunks)
+
+
                         total_chunks += len(chunks)
                         logger.info(f"Added {len(chunks)} chunks from {uploaded_file.name}")
                     
@@ -332,10 +343,14 @@ INDEX_NAME = "rag-index-new"  # or any other name
             # Use MMR (Maximum Marginal Relevance) for better diversity in results
             retriever = db.as_retriever(
                 search_type="mmr",  # Changed from similarity to MMR
-                search_kwargs={
+                search_kwargs=
+                {
                     'k': DEFAULT_RETRIEVAL_K,
                     'fetch_k': DEFAULT_RETRIEVAL_K * 2,  # Fetch more candidates
-                    'lambda_mult': 0.7  # Balance between relevance and diversity
+                    'lambda_mult': 0.7,  # Balance between relevance and diversity
+                    'filter':{
+                        "session_id": st.session_state.session_id  # Filter by session ID
+                    }
                 }
             )
 
@@ -405,6 +420,11 @@ def create_sidebar(rag_assistant: RAGAssistant) -> List:
                 st.success("✅ Valid Pinecone key")
             else:
                 st.error("❌ Invalid Pinecone key format")
+        
+        if st.sidebar.button("🆕 Start New Session"):
+            st.session_state.session_id = str(uuid.uuid4())
+            st.success("Started a new session. Old documents won't appear in searches.")
+
 
         st.markdown("---")
         st.title("📄 Document Upload")
